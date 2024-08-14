@@ -1,4 +1,5 @@
-import { InputHTMLAttributes } from "react";
+/* eslint-disable react-refresh/only-export-components */
+import { InputHTMLAttributes, memo } from "react";
 
 interface IProps extends InputHTMLAttributes<HTMLInputElement> {}
 
@@ -13,4 +14,4 @@ const Input = ({ ...rest }: IProps) => {
   );
 };
 
-export default Input;
+export default memo(Input);

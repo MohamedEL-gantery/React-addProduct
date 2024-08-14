@@ -1,15 +1,15 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState, useCallback } from "react";
 import ProductCard from "./components/ProductCard";
 import { product, formInput, arrayOfColor, productCategory } from "./data";
-import Modal from "./ui/Model";
-import Button from "./ui/Button";
-import Input from "./ui/Input";
+import Modal from "./components/ui/Model";
+import Button from "./components/ui/Button";
+import Input from "./components/ui/Input";
 import { IProduct } from "./interfaces";
 import { productValidation } from "./validations";
 import Message from "./components/Message";
 import Circle from "./components/Circle";
 import { v4 as uuidv4 } from "uuid";
-import Select from "./ui/Select";
+import Select from "./components/ui/Select";
 import toast, { Toaster } from "react-hot-toast";
 
 const defaultProductObj = {
@@ -48,17 +48,12 @@ function App() {
   const open = () => setIsOpen(true);
   const close = () => setIsOpen(false);
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-    setMsg({
-      ...msg,
-      [name]: "",
-    });
-  };
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    setMsg((prev) => ({ ...prev, [name]: "" }));
+  }, []);
 
   function onSubmitHandler(event: FormEvent<HTMLFormElement>) {
     const { title, description, imageUrl, price } = formData;
@@ -92,13 +87,13 @@ function App() {
     setFormData(defaultProductObj);
     setTempColor([]);
     close();
-      toast("Product Add Successfully", {
-        style: {
-          background: "black",
-          color: "white",
-          width: "100%",
-        },
-      });
+    toast("Product Add Successfully", {
+      style: {
+        background: "black",
+        color: "white",
+        width: "100%",
+      },
+    });
   }
 
   function onCloseHandler() {
@@ -107,7 +102,8 @@ function App() {
   }
 
   /* __EDIT HANDLER __*/
-  const openEdit = () => setIsOpenEdit(true);
+
+  const openEdit = useCallback(() => setIsOpenEdit(true), []);
   const closeEdit = () => setIsOpenEdit(false);
 
   const onChangeEditHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -167,7 +163,7 @@ function App() {
   }
 
   /* __DELETE HANDLER */
-  const openConfirmModel = () => setOpenConfirm(true);
+  const openConfirmModel = useCallback(() => setOpenConfirm(true), []);
   const closeConfirmModel = () => setOpenConfirm(false);
 
   const onDelete = () => {

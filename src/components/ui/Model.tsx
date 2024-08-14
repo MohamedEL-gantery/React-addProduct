@@ -1,5 +1,6 @@
+/* eslint-disable react-refresh/only-export-components */
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import { ReactNode } from "react";
+import { ReactNode, memo } from "react";
 
 interface IProps {
   isOpen: boolean;
@@ -45,4 +46,4 @@ const Modal = ({ children, close, isOpen, title, description }: IProps) => {
   );
 };
 
-export default Modal;
+export default memo(Modal);

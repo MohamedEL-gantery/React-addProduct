@@ -1,4 +1,6 @@
+/* eslint-disable react-refresh/only-export-components */
 "use client";
+import { memo } from "react";
 import {
   Label,
   Listbox,
@@ -7,8 +9,8 @@ import {
   ListboxOptions,
 } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { productCategory } from "../data";
-import { ICategory } from "../interfaces";
+import { productCategory } from "../../data";
+import { ICategory } from "../../interfaces";
 
 interface IProps {
   selected: { name: string; photo: string };
@@ -71,4 +73,4 @@ const Select = ({ selected, setSelected }: IProps) => {
   );
 };
 
-export default Select;
+export default memo(Select);
